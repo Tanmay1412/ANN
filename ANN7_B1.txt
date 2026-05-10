@@ -1,0 +1,72 @@
+import numpy as np
+
+
+
+X = np.array([[0,0],
+              [0,1],
+              [1,0],
+              [1,1]])
+
+y = np.array([[0],
+              [1],
+              [1],
+              [0]])
+
+
+
+np.random.seed(1)
+
+W1 = np.random.rand(2,2)
+W2 = np.random.rand(2,1)
+
+
+
+
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+
+def sigmoid_derivative(x):
+    return x*(1-x)
+
+
+
+
+
+
+losses = []
+
+for _ in range(10000):
+    z1 = np.dot(X, W1)
+    a1 = sigmoid(z1)
+
+    z2 = np.dot(a1, W2)
+    a2 = sigmoid(z2)
+
+    error = y - a2
+    loss = np.mean(error**2)
+    losses.append(loss)
+
+    d2 = error * sigmoid_derivative(a2)
+    d1 = d2.dot(W2.T) * sigmoid_derivative(a1)
+
+    W2 += a1.T.dot(d2)
+    W1 += X.T.dot(d1)
+
+
+
+
+
+output = (a2 > 0.5).astype(int)
+print(output)
+
+
+
+
+import matplotlib.pyplot as plt
+
+plt.plot(losses)
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.title("Loss vs Epoch")
+plt.grid()
+plt.show()

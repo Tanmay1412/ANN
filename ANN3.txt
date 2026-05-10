@@ -1,0 +1,40 @@
+import numpy as np
+
+X = np.array([[0],[1],[0],[1],[0],[1],[0],[1],[0],[1]])
+y = np.array([0,1,0,1,0,1,0,1,0,1])
+
+
+
+w = np.zeros(1)
+b = 0
+alpha = 0.1
+epochs = 10
+
+
+
+def step(z):
+    if z >= 0:
+        return 1
+    else:
+        return 0
+
+
+
+for _ in range(epochs):
+    for i in range(len(X)):
+        z = np.dot(X[i], w) + b
+        y_hat = step(z)
+        w = w + alpha * (y[i] - y_hat) * X[i]
+        b = b + alpha * (y[i] - y_hat)
+
+
+
+
+num = int(input())
+z = np.dot([num % 2], w) + b
+result = step(z)
+
+if result == 0:
+    print("even")
+else:
+    print("odd")

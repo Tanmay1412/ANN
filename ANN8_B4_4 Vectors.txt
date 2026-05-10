@@ -1,0 +1,57 @@
+import numpy as np
+
+
+
+X = np.array([
+    [1, -1, 1, -1],
+    [-1, 1, -1, 1],
+    [1, 1, -1, -1],
+    [-1, -1, 1, 1]
+])
+
+
+
+
+
+n = X.shape[1]
+W = np.zeros((n, n))
+
+for p in X:
+    W += np.outer(p, p)
+
+np.fill_diagonal(W, 0)
+
+print(W)
+
+
+
+
+def sign(x):
+    return np.where(x >= 0, 1, -1)
+
+
+
+
+def hopfield(x, W, steps=10):
+    for _ in range(steps):
+        x = sign(np.dot(W, x))
+    return x
+
+
+
+
+
+for i in range(len(X)):
+    print("Input:", X[i])
+    print("Output:", hopfield(X[i], W))
+    print()
+
+
+
+
+
+
+noisy = np.array([1, -1, -1, -1])
+
+print("Noisy Input:", noisy)
+print("Recovered Output:", hopfield(noisy, W))

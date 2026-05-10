@@ -1,0 +1,26 @@
+import numpy as np
+
+
+w1 = 1
+w2 = -1
+theta = 1
+
+
+
+def mp_neuron(x1, x2):
+    yin = w1*x1 + w2*x2
+    if yin >= theta:
+        return 1
+    else:
+        return 0
+
+
+
+inputs = [(0,0), (0,1), (1,0), (1,1)]
+
+
+
+#ANDNOT
+for x1, x2 in inputs:
+    y = mp_neuron(x1, x2)
+    print(x1, x2, y)

@@ -1,0 +1,43 @@
+import numpy as np
+
+
+X = np.array([[1,0,1]])
+y = np.array([[1]])
+
+
+
+np.random.seed(1)
+W1 = np.random.rand(3,2)
+W2 = np.random.rand(2,1)
+
+
+
+
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+
+def sigmoid_derivative(x):
+    return x*(1-x)
+
+
+
+
+for _ in range(10000):
+    z1 = np.dot(X, W1)
+    a1 = sigmoid(z1)
+
+    z2 = np.dot(a1, W2)
+    a2 = sigmoid(z2)
+
+    error = y - a2
+
+    d2 = error * sigmoid_derivative(a2)
+    d1 = d2.dot(W2.T) * sigmoid_derivative(a1)
+
+    W2 += a1.T.dot(d2)
+    W1 += X.T.dot(d1)
+
+
+
+
+print(a2)

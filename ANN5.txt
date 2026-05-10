@@ -1,0 +1,37 @@
+import numpy as np
+
+
+X = np.array([[1,1,1],
+              [-1,-1,-1]])
+
+
+
+Y = np.array([[1,1],
+              [-1,-1]])
+
+
+W = np.dot(X.T, Y)
+
+
+
+
+def sign(x):
+    return np.where(x >= 0, 1, -1)
+
+
+for i in range(len(X)):
+    x = X[i]
+    for _ in range(5):
+        y = sign(np.dot(x, W))
+        x = sign(np.dot(y, W.T))
+    print(y)
+
+
+
+
+for i in range(len(Y)):
+    y = Y[i]
+    for _ in range(5):
+        x = sign(np.dot(y, W.T))
+        y = sign(np.dot(x, W))
+    print(x)
